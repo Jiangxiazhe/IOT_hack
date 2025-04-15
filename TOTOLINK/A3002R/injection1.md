@@ -17,15 +17,15 @@ sudo ./run.sh -d TOTOLINK ../FIRMWARE/TOTOLINK_A3002R_Ge_V4_0_0_B20230531_1404.w
 The default username is 'admin', password is 'admin'.
 The result of the simulation is as follows: 
 
-![[sim_res.png]]
+![[sim_res.png]](./img/sim_res.png)
 ## Vulnerability Analysis
 
 The vulnerable code constructs a command string using unsanitized user input (`devicemac%d` parameter) and passes it directly to the `system()` function. Using ghidra we can find the code below in function `FUN_00459fdc`:
 
-![[work_record/TOTOLINK/2/img/code_1.png]]
+![[work_record/TOTOLINK/2/img/code_1.png]](./img/code_1.png)
 
 sink point:
-![[sink.png]]
+![[sink.png]](./img/sink.png)
 
 The lack of input validation allows command injection through the `devicemac%d` parameter. An attacker can break out of the intended command structure and execute arbitrary commands by including shell metacharacters.
 
@@ -62,8 +62,8 @@ sessionCheck=a6bdaa17dd6b63a74eb809d6fa1fc2f1&deviceNum=2&enabled1=ON&devicemac1
 
 The result of the POC is as follows. You can execute any command you want, here we create a poc.txt file with the content "poc" in the root directory.
 
-![[burp.png]]
+![[burp.png]](./img/burp.png)
 
 In the FirmAE terminal, we check whether the command is executed successfully. We can see that the command is executed successfully and the poc is written into the poc.txt file.
 
-![[res.png]]
+![[res.png]](./img/res.png)
