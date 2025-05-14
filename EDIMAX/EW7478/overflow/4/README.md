@@ -1,12 +1,12 @@
 ## **Description**
 
-A buffer overflow vulnerability was discovered in the Edimax EW-7478AC firmware version ​**V1.07**. The vulnerability arises from the improper input validation of the `pskValue` parameter in the 'formiNICbasic' interface of the file webs.
+A buffer overflow vulnerability was discovered in the Edimax EW-7478AC firmware version ​**V1.04**. The vulnerability arises from the improper input validation of the `pskValue` parameter in the 'formiNICbasic' interface of the file webs.
 
 ## ​**Affected Product**
 
 - ​**Brand**: EDIMAX
 - ​**Product**: EW-7478AC
-- ​**Version**: V1.07
+- ​**Version**: V1.04
 
 The firmware can be downloaded from the official website.  
 The vulnerability was confirmed using ​**FirmAE** for firmware emulation:
