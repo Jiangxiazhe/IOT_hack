@@ -55,7 +55,3 @@ band=aban&command=%0aecho hack>/poc.txt%0a
 
 After the request we can see the file 'poc.txt' been created in the root directory.
 ![result](./img/result.png)
-
-if we change the value of 'interface', we can trigger a buffer overflow vulnerability. The attack result are as follow:
-![overflow](overflow_result.png)
-![[work_record/EDIMAX/EW7478/injection/2/img/result.png]]

@@ -1,6 +1,6 @@
 ## **Description**
 
-A command injection and buffer overflow vulnerability was discovered in the Edimax EW-7478AC firmware version ​**V1.04*. The vulnerability arises from the improper input validation of the `interface` parameter in the 'stainfo' interface of the file webs.
+A command injection and buffer overflow vulnerability was discovered in the Edimax EW-7478AC firmware version ​**V1.04**. The vulnerability arises from the improper input validation of the `interface` parameter in the 'stainfo' interface of the file webs.
 
 ## ​**Affected Product**
 
@@ -56,4 +56,4 @@ After the request we can see the file 'poc.txt' been created in the root directo
 ![result](./img/result.png)
 
 if we change the value of 'interface', we can trigger a buffer overflow vulnerability. The attack result are as follow:
-![overflow](overflow_result.png)
+![overflow](./img/overflow_result.png)
