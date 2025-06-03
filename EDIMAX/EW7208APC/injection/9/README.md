@@ -1,6 +1,6 @@
 ## **Description**
 
-A command injection vulnerability was discovered in the Edimax EW-7208APC firmware version ​**V1.02**. The vulnerability arises from the improper input validation of the `'pinCode'` parameter in the 'formWpsStar5G' interface of the file webs.
+A command injection vulnerability was discovered in the Edimax EW-7208APC firmware version ​**V1.02**. The vulnerability arises from the improper input validation of the `'pinCode'` parameter in the 'formWpsStart5G' interface of the file webs.
 
 ## ​**Affected Product**
 
