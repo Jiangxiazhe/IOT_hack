@@ -5,7 +5,7 @@ A buffer overflow vulnerability was discovered in the TOTOLINK firmware N300RT-
 ## ​**Affected Product**
 
 - ​**Brand**: TOTOLINK
-- ​**Product**: N300RT-Ad
+- ​**Product**: N300RT
 - ​**Version**: V4.0.0-B20211109.1137
 
 The firmware can be downloaded from the official website.  
