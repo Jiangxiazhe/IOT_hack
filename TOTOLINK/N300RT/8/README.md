@@ -21,14 +21,14 @@ sudo ./run.sh -d totolink ../FIRMWARE/TOTOLINK-N300RT-Ad-V4.0.0-B20211109.1137.w
 - ​**Password**: `admin`
 
 The result of the simulation is as follows: 
-![sim_res](work_record/TOTOLINK/N300RT_ad/8/img/sim_res.png)
+![sim_res](./img/sim_res.png)
 
 ## ​**Vulnerability Analysis**
 
 ### ​**Key Vulnerable Code**
 
 Using ghidra we known that the vulnerability code in function 'FUN_00415ae0' is below:
-![vulner_code.png](work_record/TOTOLINK/N300RT_ad/8/img/vulner_code.png)
+![vulner_code.png](./img/vulner_code.png)
 - ​**web_get_var** retrieves POST parameters.
 - **sprintf()** is used without length checks, leading to a ​buffer overflow.​
 
@@ -55,4 +55,4 @@ addPortFw=1&fw_ip=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 ```
 
 After the request the `boa` process will crash.
-![result](work_record/TOTOLINK/N300RT_ad/8/img/result.png)
+![result](./img/result.png)

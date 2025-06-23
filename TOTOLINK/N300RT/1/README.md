@@ -21,14 +21,14 @@ sudo ./run.sh -d totolink ../FIRMWARE/TOTOLINK-N300RT-Ad-V4.0.0-B20211109.1137.w
 - ​**Password**: `admin`
 
 The result of the simulation is as follows: 
-![sim_res](work_record/TOTOLINK/N300RT_ad/1/img/sim_res.png)
+![sim_res](./img/sim_res.png)
 
 ## ​**Vulnerability Analysis**
 
 ### ​**Key Vulnerable Code**
 
 Using ghidra we known that the vulnerability code in function 'FUN_0044182c' is below:
-![vulner_code.png](work_record/TOTOLINK/N300RT_ad/1/img/vulner_code.png)
+![vulner_code.png](./img/vulner_code.png)
 
 - ​**web_get_var** retrieves POST parameters.
 - ​Due to the reason of ghidra decompiled, we didn't find the exact code line of buffer overflow, but we suspect that the vulnerability caused by the function 'FUN_0040f6e8'
@@ -37,7 +37,7 @@ Using ghidra we known that the vulnerability code in function 'FUN_0044182c' is 
 ## **Proof of Concept (PoC)**
 ### Function Test
 We test the function by a normal POST packet.
-![result](test_res.png)
+![result](./img/test_res.png)
 
 ### ​**Exploit Request**
 We use burpsuite to capture a normal POST packet for test.
@@ -61,4 +61,4 @@ submit-url=%2Fwlwps.htm&resetUnCfg=0&localPin=99956042&targetAPMac=&targetAPSsid
 ```
 
 After the request the `boa` process will crash.
-![result](work_record/TOTOLINK/N300RT_ad/1/img/result.png)
+![result](./img/result.png)
